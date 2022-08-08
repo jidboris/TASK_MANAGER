@@ -1,20 +1,50 @@
 const express = require("express");
 const router = express.Router();
-//const taskSchema = require("../modules/taskSchema")
+const taskSchema = require("../modules/taskSchema")
 const taskController = require("../Controller/task")
-// const { mongoose } = require('mongoose');
-router.use(express.json());
+//const swaggerDoc = require("../swaggerDoc.js")
+// const swaggerUi = require('swagger-ui-express');
+// const swaggerJsDoc = require('swagger-jsdoc');
 
-// async function connect() {
-//     await mongoose.connect('mongodb://localhost:27017')
-// }
-// connect().then(() => console.log('connected to database'))
-// .catch((error) =>{ 
-//     console.log('Error:', error()) })
+// router.use(express.json());
 
+// const swaggerOptions = {
+//     swaggerDefinition: {
+//         info: {
+//             title: 'Task Manager API',
+//             description: 'For Task Management',
+//             contact: {
+//                 name: 'Olajide'
+//             },
+//             servers: ['http://localhost:3200']
+//         }
+//     },
+//     apis: ["taskRoute.js"]
+// };
+// const swaggerDocs = swaggerJsDoc(swaggerOptions);
+// router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+//Route
+/**
+ * @swagger
+ * /tasks:
+ *  post:
+ *     description: use to add a task 
+ *     requestBody:
+ *       required: true
+ *       content:
+ *          application/json:
+ *             schema:
+ *                $ref: '#./Route/*.js'    
+ *     responses:
+ *       '200':
+ *        description: Task assigned successfully          
+ */
 router.post('/', taskController.createTask);
+
 router.get('/', taskController.retrieve);
-router.get('/:id/', taskController.retrieveOne);
+
+router.get('/:id', taskController.retrieveOne);
 
 
 
