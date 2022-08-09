@@ -32,8 +32,38 @@ const retrieveOne = async (req, res, next,) => {
          res.status(200).json(oneTask)   
      }
     }
+// This logic updates task assigned to owner 
+const changeTask = async (req, res, next,) => {
+    const foundTask = await taskModel.findById(req.params.id).exec();
+   try{ if (!foundTask) {
+        res.status(404).send('task with the given id does not exist')
+    }
+    else {
+        foundTask.Task = req.body.Task,
+        foundTask.Completed = req.body.Completed
+      //  foundTask.Owner = req.body.Owner
+    const changedTask = await foundTask.save();
+        console.log(changedTask);
+        res.json(changedTask)
+    }}
+   catch(error){console.log("Error in editing task")}
+}
+// Logic deletes assigned task
+const deleteTask = async (req, res, next,) => {
+    try {const findTask = await taskModel.findByIdAndRemove(req.params.id).exec()
+       const deletedTask = await findTask
+    console.log('deleted Task', deletedTask)
+        res.status(200).json(deletedTask)
+
+    if (!findTask) {
+        res.status(404).send('task with the given id does not exist')
+    }
+}
+catch(error){console.log("processing error")}}
 module.exports = {
     createTask,
     retrieve,
-    retrieveOne
+    retrieveOne,
+    changeTask,
+    deleteTask
 }
