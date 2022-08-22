@@ -1,98 +1,82 @@
 const express = require("express");
 const router = express.Router();
-//const taskSchema = require("../modules/taskSchema")
+const CORS = require("cors");
+const taskSchema = require("../modules/taskSchema")
 const taskController = require("../Controller/task")
-// const { mongoose } = require('mongoose');
-router.use(express.json());
 
-// async function connect() {
-//     await mongoose.connect('mongodb://localhost:27017')
-// }
-// connect().then(() => console.log('connected to database'))
-// .catch((error) =>{ 
-//     console.log('Error:', error()) })
+// Defining swagger schema documentation for tasks
+// /**
+// * @swagger
+// *  components:
+// *     schema:
+// *        task:
+// *            type: object
+// *            properties:
+// *                 Task:
+// *                     type: string
+// *                 Completed:
+// *                     type: string
+// *                 Owner:
+// *                     type: string
+// */
 
+// swagger doucumentation of task post api route
+/**
+ * @swagger
+ * /tasks:
+ *  post:
+ *     description: use to add a task     
+ *     responses:
+ *      '200':
+ *        description: Task assigned successfully          
+ */
 router.post('/', taskController.createTask);
+/**
+  * @swagger
+  * /tasks:
+  *  get:
+  *     summary: To get all tasks
+  *     description: use to add a task  
+  *     responses: 
+  *         200:
+  *             description: This api is used to fetch all tasks          
+  */
 router.get('/', taskController.retrieve);
+/**
+  * @swagger
+  * /tasks/:id/tasks:
+  *  get:
+  *     summary: To get all tasks
+  *     description: use this api to fetch a task 
+  *     responses: 
+  *         200:
+  *             description: This api is used to fetch assigned task          
+  */
 router.get('/:id/', taskController.retrieveOne);
+/**
+  * @swagger
+  * /tasks/:id/tasks:
+  *  put:
+  *     summary: To get all tasks 
+  *     description: use this api to fetch a task 
+  *     responses: 
+  *         200:
+  *             description: This api is used to update task details          
+  */
+router.put('/:id/', taskController.changeTask);
 
-
-
-
-// for each user to enter their parcel details
-// router.post('/', (req, res) => {
-//     const newParcel = new parcelModel(
-//         {
-//             Item: req.body.Item,
-//             attributes: req.body.attributes
-//         });
-
-//     newParcel.save()
-
-//     res.json(
-//         newParcel
-//     )
-//     console.log('New parcel', newParcel)
-// });
-// //This logic extracts all the parcel registered in database.
-// router.get('/', async (req, res) => {
-//     const Parcels = await parcelModel.find()
-
-//     console.log('Parcels', Parcels)
-//     res.json(Parcels)
-// });
-
-// //Logic uses the parcel id to get One Parcel detail
-// router.get('/:id', async (req, res) => {
-//     const Parcel = await parcelModel.findById(req.params.id).exec();
-//     if (!Parcel) {
-//         res.status(404).send('Parcel with the given id does not exist')
-//     }
-
-//     else {
-//         res.json(Parcel)
-//         console.log('parcel', Parcel)
-//     }
-// });
-// //Logic to get the Item in a particular parcel
-// router.get('/parcelItem/:id', async (req, res) => {
-//     const Parcel = await parcelModel.findById(req.params.id).exec();
-//     if (!Parcel) {
-//         res.status(404).send('Parcel with the given id does not exist')
-//     }
-//     else {
-//         Parcel.Item = req.body.Item
-//         const PI = Parcel.Item
-//         res.json(PI)
-//         console.log('parcel', Parcel.Item)
-//     }
-// });
-
-// // Logic edits the parcel order details
-// router.put('/parcelEdit/:id', async (req, res) => {
-//     const Parcel = await parcelModel.findById(req.params.id);
-//     console.log(Parcel)
-//     if (!Parcel) {
-//         res.status(404).send('parcel with the given id does not exist')
-//     }
-//     else {
-//         Parcel.Item = req.body.Item
-//         Parcel.attributes = req.body.attributes
-//         const editParcel = await Parcel.save()
-//         console.log(editParcel)
-//         res.json(editParcel)
-//     }
-// });
-
-// // Logic for deleting parcel order 
-// router.delete('/parcelDelete/:id', async (req, res) => {
-//     const Parcel = await parcelModel.findByIdAndRemove(req.params.id).exec()
-//     console.log('Parcel index', Parcel)
-//     if (!Parcel) res.status(404).send('parcel with the given id does not exist')
-//     const deleteParcel = await Parcel
-//     res.send('parcel deleted succesfully')
-//     console.log('deleted parcel', deleteParcel)
-// });
+// Logic for deleting task details
+/**
+  * @swagger
+  * /tasks/:id/tasks:
+  *  delete:
+  *     summary: To get all tasks 
+  *     description: use this api to delete a task 
+  *     responses: 
+  *         200:
+  *             description: This api is used to delete task input          
+  */
+router.delete('/:id/tasks', taskController.deleteTask)
 
 
 module.exports = router
