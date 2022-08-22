@@ -20,6 +20,7 @@ mongoose
 .connect(uri, {useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => console.log("Database Connected"))
 .catch((err) => console.log(err)); 
+                //OR
 // const connectDB = async () => {
 //     try{
 //         await mongoose.connect(uri);
@@ -47,5 +48,5 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
 app.listen(PORT, () =>
-    console.log("listening on port" + " " + PORT)
+    console.log(`listening on port ${PORT}` )
 );

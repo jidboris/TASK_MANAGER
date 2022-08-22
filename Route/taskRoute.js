@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const CORS = require("cors");
-const taskSchema = require("../modules/taskSchema")
+//const taskSchema = require("../modules/taskSchema")
 const taskController = require("../Controller/task")
 
 // Defining swagger schema documentation for tasks
